@@ -150,11 +150,11 @@ function App() {
         <article className="panel">
           <h3>1) Task Manager</h3>
           <div className="row">
-            <input value={taskText} onChange={(e) => setTaskText(e.target.value)} placeholder="Add a task" />
-            <select value={taskPriority} onChange={(e) => setTaskPriority(e.target.value)}>
+            <input aria-label="Task description" value={taskText} onChange={(e) => setTaskText(e.target.value)} placeholder="Add a task" />
+            <select aria-label="Task priority" value={taskPriority} onChange={(e) => setTaskPriority(e.target.value)}>
               <option>High</option><option>Medium</option><option>Low</option>
             </select>
-            <button onClick={addTask} disabled={!taskText.trim()}>Add</button>
+            <button onClick={addTask}>Add</button>
           </div>
           {appState.tasks.map((t) => (
             <div key={t.id} className="task">
@@ -169,7 +169,7 @@ function App() {
           <h3>2) Pomodoro</h3>
           <div className="timer">{fmt}</div>
           <div className="row">
-            <input type="number" min="5" value={minutesInput} onChange={(e) => setMinutesInput(e.target.value)} />
+            <input aria-label="Focus minutes" type="number" min="5" value={minutesInput} onChange={(e) => setMinutesInput(e.target.value)} />
             <button onClick={savePomodoro}>Set Minutes</button>
             <button onClick={() => setRunning((v) => !v)}>{running ? 'Pause' : 'Start'}</button>
             <button onClick={() => { setRunning(false); setSecondsLeft(appState.focusMinutes * 60) }}>Reset</button>
@@ -181,9 +181,9 @@ function App() {
         <article className="panel">
           <h3>3) AI Study Plan</h3>
           <div className="row">
-            <input value={goal} onChange={(e) => setGoal(e.target.value)} placeholder="Your goal" />
-            <input type="number" value={hours} onChange={(e) => setHours(e.target.value)} min="1" max="60" />
-            <button onClick={generatePlan} disabled={!goal.trim()}>Generate</button>
+            <input aria-label="Study goal" value={goal} onChange={(e) => setGoal(e.target.value)} placeholder="Your goal" />
+            <input aria-label="Weekly study hours" type="number" value={hours} onChange={(e) => setHours(e.target.value)} min="1" max="60" />
+            <button onClick={generatePlan}>Generate</button>
           </div>
           <ul>{plan.map((line, i) => <li key={i}>{line}</li>)}</ul>
         </article>
@@ -191,13 +191,13 @@ function App() {
         <article className="panel">
           <h3>4) Flashcards + Quiz</h3>
           <div className="row">
-            <input value={flashQ} onChange={(e) => setFlashQ(e.target.value)} placeholder="Question" />
-            <input value={flashA} onChange={(e) => setFlashA(e.target.value)} placeholder="Answer" />
-            <button onClick={addFlashcard} disabled={!flashQ.trim() || !flashA.trim()}>Save</button>
+            <input aria-label="Flashcard question" value={flashQ} onChange={(e) => setFlashQ(e.target.value)} placeholder="Question" />
+            <input aria-label="Flashcard answer" value={flashA} onChange={(e) => setFlashA(e.target.value)} placeholder="Answer" />
+            <button onClick={addFlashcard}>Save</button>
           </div>
           <div className="row">
-            <button onClick={() => { setQuizMode((v) => !v); setShowAnswer(false) }} disabled={appState.flashcards.length === 0}>{quizMode ? 'Exit Quiz' : 'Start Quiz'}</button>
-            <button onClick={() => { setQuizIndex((i) => (appState.flashcards.length ? (i + 1) % appState.flashcards.length : 0)); setShowAnswer(false) }} disabled={appState.flashcards.length === 0}>Next</button>
+            <button onClick={() => { setQuizMode((v) => !v); setShowAnswer(false) }}>{quizMode ? 'Exit Quiz' : 'Start Quiz'}</button>
+            <button onClick={() => { setQuizIndex((i) => (appState.flashcards.length ? (i + 1) % appState.flashcards.length : 0)); setShowAnswer(false) }}>Next</button>
           </div>
           {quizMode && card && (
             <div className="quiz">
