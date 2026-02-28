@@ -74,6 +74,7 @@ input, select, button {
 button {
   background: linear-gradient(135deg, #2563eb, #7c3aed);
   border: none;
+  cursor: pointer;
   font-weight: 700;
 }
 
@@ -133,4 +134,10 @@ button.danger {
 
 @media (max-width: 900px) {
   .two { grid-template-columns: 1fr; }
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(30%);
 }

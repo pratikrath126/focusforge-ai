@@ -33,6 +33,7 @@ function App() {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (raw) {
       const parsed = JSON.parse(raw)
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setAppState(parsed)
       const m = parsed.focusMinutes || 25
       setMinutesInput(m)
@@ -51,6 +52,7 @@ function App() {
   }, [running, secondsLeft])
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (secondsLeft === 0) setRunning(false)
   }, [secondsLeft])
 
@@ -152,7 +154,7 @@ function App() {
             <select value={taskPriority} onChange={(e) => setTaskPriority(e.target.value)}>
               <option>High</option><option>Medium</option><option>Low</option>
             </select>
-            <button onClick={addTask}>Add</button>
+            <button onClick={addTask} disabled={!taskText.trim()}>Add</button>
           </div>
           {appState.tasks.map((t) => (
             <div key={t.id} className="task">
@@ -181,7 +183,7 @@ function App() {
           <div className="row">
             <input value={goal} onChange={(e) => setGoal(e.target.value)} placeholder="Your goal" />
             <input type="number" value={hours} onChange={(e) => setHours(e.target.value)} min="1" max="60" />
-            <button onClick={generatePlan}>Generate</button>
+            <button onClick={generatePlan} disabled={!goal.trim()}>Generate</button>
           </div>
           <ul>{plan.map((line, i) => <li key={i}>{line}</li>)}</ul>
         </article>
@@ -191,11 +193,11 @@ function App() {
           <div className="row">
             <input value={flashQ} onChange={(e) => setFlashQ(e.target.value)} placeholder="Question" />
             <input value={flashA} onChange={(e) => setFlashA(e.target.value)} placeholder="Answer" />
-            <button onClick={addFlashcard}>Save</button>
+            <button onClick={addFlashcard} disabled={!flashQ.trim() || !flashA.trim()}>Save</button>
           </div>
           <div className="row">
-            <button onClick={() => { setQuizMode((v) => !v); setShowAnswer(false) }}>{quizMode ? 'Exit Quiz' : 'Start Quiz'}</button>
-            <button onClick={() => { setQuizIndex((i) => (appState.flashcards.length ? (i + 1) % appState.flashcards.length : 0)); setShowAnswer(false) }}>Next</button>
+            <button onClick={() => { setQuizMode((v) => !v); setShowAnswer(false) }} disabled={appState.flashcards.length === 0}>{quizMode ? 'Exit Quiz' : 'Start Quiz'}</button>
+            <button onClick={() => { setQuizIndex((i) => (appState.flashcards.length ? (i + 1) % appState.flashcards.length : 0)); setShowAnswer(false) }} disabled={appState.flashcards.length === 0}>Next</button>
           </div>
           {quizMode && card && (
             <div className="quiz">
