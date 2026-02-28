@@ -1,6 +1,6 @@
 # FocusForge AI
 
-FocusForge AI is a modern student productivity web app built with React + Vite and deployed on Vercel.
+FocusForge AI is a modern student productivity web app built with React + Vite and deployed on Vercel
 
 ## Live Demo
 - https://focusforge-ai-rust.vercel.app
